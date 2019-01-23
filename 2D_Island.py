@@ -16,18 +16,18 @@ import time
 
 pi=np.pi
 d = 1.0 #distance between sites
-N_atoms = 2 #island is N_atoms x N_atoms
+N_atoms = 6 #island is N_atoms x N_atoms
 borde_x = 3
 borde_y = 3
 #alpha = 4.0 #SOC
 alpha = 0.0 #SOC
 state = 'FM' #spin state
-k_F = 0.55
+k_F = 0.6
 U = -5500./27211.6#%potential scatt
 U = 0.0
 #U = -3500.0/27211.6#%potential scatt
 j = -1800./27211.6 #coupling
-j = -3100./27211.6
+#j = -3100./27211.6
 DOS = 1.0
 s = 5.0/2.0 #spin
 delta = 0.75/27211.6 #SC gap

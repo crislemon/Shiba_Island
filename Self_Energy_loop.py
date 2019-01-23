@@ -26,14 +26,12 @@ def Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde_x, borde_y, lamda
          for i_atom in range(N_atoms):
          
              g_i = (j_atom + borde_y) * N_x + (i_atom + borde_x)
-             Self [g_i, g_i]= 5.0
-         
      
      #for i_atom in range(N_atoms):
      #    
      #    g_i = int(N_y/2.0) * N_x + (i_atom + borde_x)
-             theta_i = thetaS[i_atom]
-             phi_i = phi[i_atom]
+             theta_i = thetaS[j_atom + N_atoms * i_atom]
+             phi_i = phi[j_atom + N_atoms * i_atom]
          
          
              Self [g_i, g_i, 0, 0]= J*S*cos(theta_i)-U

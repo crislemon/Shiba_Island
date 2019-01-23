@@ -64,7 +64,7 @@ def espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, 
     plt.xlabel('meV')
     plt.ylabel('PDOS')
     plt.title('Spin up')
-    plt.savefig('results/spectro_13')
+    plt.savefig('results/spectro_13.pdf')
     
     plt.figure(4)
     plt.style.use('seaborn-bright')
@@ -76,7 +76,7 @@ def espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, 
     plt.xlabel('meV')
     plt.ylabel('PDOS')
     plt.title('Spin down')
-    plt.savefig('results/spectro_24')
+    plt.savefig('results/spectro_24.pdf')
     
     
     

@@ -17,7 +17,7 @@ def map2D_3D(z, z_up, z_down, z_x, z_13, z_24, titulo, N_x, N_y, N_omega, vv):
     plt.figure(7)
     plt.imshow(z, cmap = plt.cm.jet)
     plt.colorbar(orientation='horizontal')
-    plt.title('FM E = %f meV')
+    plt.title('FM E = %f meV' %titulo)
     plt.savefig('results/2D.pdf')
     
 #    plt.figure(6)
