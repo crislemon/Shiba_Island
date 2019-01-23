@@ -16,11 +16,11 @@ import time
 
 pi=np.pi
 d = 1.0 #distance between sites
-N_atoms = 24 #number of atoms
-borde = 2
-ancho = 5
+N_atoms = 2 #island is N_atoms x N_atoms
+borde_x = 3
+borde_y = 3
 #alpha = 4.0 #SOC
-alpha = 3.0 #SOC
+alpha = 0.0 #SOC
 state = 'FM' #spin state
 k_F = 0.55
 U = -5500./27211.6#%potential scatt
@@ -36,9 +36,9 @@ range_omega = 4
 
 ################################################# We solve Dyson's equation
 
-import Shiba_Chain2D as sc2
+import Shiba_Island2D as sc2
 t1=time.time()
-(gg , N_x, N_y, N_omega , vv, Go, Self2) = sc2.Shiba_Chain2(d, N_atoms, state, alpha, borde, ancho, 
+(gg , N_x, N_y, N_omega , vv, Go, Self2) = sc2.Island(d, N_atoms, state, alpha, borde_x, borde_y, 
 k_F, U, j, DOS, s, delta, N_omega, range_omega)
 t2 = time.time()
  
@@ -113,7 +113,7 @@ row = int(N_y/2)
 medio=int(N_x/2)
 import plot_espectro as spect
 
-(titulo, ndexes, i) = spect.espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, spectro_24, spectro_42, row, vv, borde)
+(titulo, ndexes, i) = spect.espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, spectro_24, spectro_42, row, vv, borde_x, borde_y)
 
 
 #####
@@ -125,15 +125,15 @@ pf.profile(N_x, titulo, spectro, row, ndexes, i)
 ######
 "Plot the spectrum for all Nambu operators"
 import plot_nambu as nb
-nb.Nambu(spectro_up, spectro_down, spectro_uphole, spectro_downhole, vv, row, borde)
+nb.Nambu(spectro_up, spectro_down, spectro_uphole, spectro_downhole, vv, row, borde_x, borde_y)
 
 
 ###
 "creates 2D maps"
 
 import maps as mp
-(e, e_up, e_down, e_x, e_13, e_24, z, z_up, z_down, z_x, z_13, z_24) = mp.maps(N_y, N_x, 
-spectro, ndexes, i, N_omega, row, borde, vv, spectro_spinup, spectro_spindown, spectro_spinx, spectro_13, spectro_24)
+(z, z_up, z_down, z_x, z_13, z_24) = mp.maps(N_y, N_x, 
+spectro, ndexes, i, N_omega, row, borde_x, borde_y, vv, spectro_spinup, spectro_spindown, spectro_spinx, spectro_13, spectro_24)
 
 #z is the PDOS every where in the array for the energy 
 #corresponding to the closest peaks to zero in the first atom
@@ -144,7 +144,7 @@ spectro, ndexes, i, N_omega, row, borde, vv, spectro_spinup, spectro_spindown, s
 ###
 "2D and 3D plots"
 import plot_2D3D as map2D
-map2D.map2D_3D(e, e_up, e_down, e_x, e_13, e_24, z, z_up, z_down, z_x, z_13, z_24, titulo, N_x, N_y, N_omega, vv)
+map2D.map2D_3D(z, z_up, z_down, z_x, z_13, z_24, titulo, N_x, N_y, N_omega, vv)
 
 
 "plot Green's function"

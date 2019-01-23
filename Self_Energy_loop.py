@@ -15,29 +15,36 @@ ui = complex(0.0, 1.0)
 
 #Local self-energy for exchange and SOC
 
-def Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde, lamda):
+def Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde_x, borde_y, lamda):
     
      Self = np.zeros([N_y * N_x, N_y * N_x, 4, 4], dtype=complex)
      Self2 = np.zeros([N_y * N_x * 4, N_y * N_x * 4], dtype=complex)
      
      "diagonal in the atom space"
      
-     for i_atom in range(N_atoms):
+     for j_atom in range(N_atoms):
+         for i_atom in range(N_atoms):
          
-         g_i = int(N_y/2.0) * N_x + (i_atom + borde)
-         theta_i = thetaS[i_atom]
-         phi_i = phi[i_atom]
+             g_i = (j_atom + borde_y) * N_x + (i_atom + borde_x)
+             Self [g_i, g_i]= 5.0
+         
+     
+     #for i_atom in range(N_atoms):
+     #    
+     #    g_i = int(N_y/2.0) * N_x + (i_atom + borde_x)
+             theta_i = thetaS[i_atom]
+             phi_i = phi[i_atom]
          
          
-         Self [g_i, g_i, 0, 0]= J*S*cos(theta_i)-U
-         Self [g_i, g_i, 1, 1]= - J*S*cos(theta_i)-U
-         Self [g_i, g_i, 2, 2]= - J*S*cos(theta_i)+U
-         Self [g_i, g_i, 3, 3]= J*S*cos(theta_i)+U
+             Self [g_i, g_i, 0, 0]= J*S*cos(theta_i)-U
+             Self [g_i, g_i, 1, 1]= - J*S*cos(theta_i)-U
+             Self [g_i, g_i, 2, 2]= - J*S*cos(theta_i)+U
+             Self [g_i, g_i, 3, 3]= J*S*cos(theta_i)+U
          
-         Self [g_i, g_i, 0, 1]= J*S*sin(theta_i)*exp(-ui*phi_i)
-         Self [g_i, g_i, 1, 0]= J*S*sin(theta_i)*exp(ui*phi_i)
-         Self [g_i, g_i, 2, 3]= - J*S*sin(theta_i)*exp(ui*phi_i)
-         Self [g_i, g_i, 3, 2]= - J*S*sin(theta_i)*exp(-ui*phi_i)
+             Self [g_i, g_i, 0, 1]= J*S*sin(theta_i)*exp(-ui*phi_i)
+             Self [g_i, g_i, 1, 0]= J*S*sin(theta_i)*exp(ui*phi_i)
+             Self [g_i, g_i, 2, 3]= - J*S*sin(theta_i)*exp(ui*phi_i)
+             Self [g_i, g_i, 3, 2]= - J*S*sin(theta_i)*exp(-ui*phi_i)
          
         
      "Non - diagonal in the atom space"

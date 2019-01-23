@@ -8,7 +8,7 @@ Created on Mon Oct  1 12:37:27 2018
 #everything in atomic units
 import numpy as np
 
-def Shiba_Chain2(nstep, N_atoms, state, alpha, borde, ancho, k_f, U, j, DOS, s, delta, N_omega, range_omega):
+def Island(d, N_atoms, state, alpha, borde_x, borde_y, k_f, U, j, DOS, s, delta, N_omega, range_omega):
     
     # d = nstep*a distance between sites
     # N_atoms in the chain
@@ -20,20 +20,18 @@ def Shiba_Chain2(nstep, N_atoms, state, alpha, borde, ancho, k_f, U, j, DOS, s, 
     #N_y = number of sites perpendicular to the chain
     
     pi=np.pi
-    N_x = N_atoms + 2*borde
-    N_y = ancho
+    N_x = N_atoms + 2*borde_x
+    N_y = N_atoms + 2*borde_y
     
-    #for d = 2a
-    #N_x = 2*N_atoms + 2*borde
     
     "Magnetic impurities parameters and spin state"
     S = 5.0/2.0 #Cr
     S = s
 
     if (state == 'FM'):
-        thetaS = np.zeros(N_atoms, dtype = 'float')
+        thetaS = np.zeros(N_atoms ** 2, dtype = 'float')
     elif (state == 'AF'):
-        thetaS = np.zeros(N_atoms, dtype = 'float')
+        thetaS = np.zeros(N_atoms ** 2, dtype = 'float')
         for i in range(int(len(thetaS)/2)):
             thetaS[2*i+1] = pi
         if N_atoms % 2 == 0:
@@ -42,7 +40,7 @@ def Shiba_Chain2(nstep, N_atoms, state, alpha, borde, ancho, k_f, U, j, DOS, s, 
         thetaS = np.full(N_atoms, - pi/2.0, dtype = 'float')
         
 
-    phi = np.zeros(N_atoms)
+    phi = np.zeros(N_atoms ** 2)
     
     #spin spiral
     #thetaS =np.linspace(0, 2.0 * pi, N_atoms)
@@ -54,7 +52,7 @@ def Shiba_Chain2(nstep, N_atoms, state, alpha, borde, ancho, k_f, U, j, DOS, s, 
     DOS_o = DOS #Normal phase DOS
     Fermi_k = k_f
     mass_eff=1 #SC Band effective mass
-    a_interatomic=nstep*3.36/0.529
+    a_interatomic = d * 3.36/0.529
 
     "spin-orbit coupling"
     lamda = (alpha/(2 * 3.36))/27.2116
@@ -88,7 +86,7 @@ def Shiba_Chain2(nstep, N_atoms, state, alpha, borde, ancho, k_f, U, j, DOS, s, 
     #    Self = SE.Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde, lamda)
     
     import Self_Energy_loop as SL
-    Self2 = SL.Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde, lamda)
+    Self2 = SL.Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde_x, borde_y, lamda)
     
     GG = np.zeros([4 * N_y * N_x , 4 * N_y * N_x, N_omega], dtype=complex)
     

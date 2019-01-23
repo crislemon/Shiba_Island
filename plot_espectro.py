@@ -9,18 +9,18 @@ import matplotlib.pyplot as plt
 import detect_peaks as dp
 plt.rcParams.update({'font.size': 13})
 
-def espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, spectro_24, spectro_42, row, vv, borde):
+def espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, spectro_24, spectro_42, row, vv, borde_x, borde_y):
     
 
-    spectro_chain = spectro[row, borde, :]#spectrum in the first atom
-    spectro_13_one = spectro_13[row, borde, :]
-    spectro_31_one = spectro_31[row, borde, :]
+    spectro_chain = spectro[borde_y, borde_x, :]#spectrum in the first atom
+    spectro_13_one = spectro_13[borde_y, borde_x, :]
+    spectro_31_one = spectro_31[borde_y, borde_x, :]
     
-    spectro_24_one = spectro_24[row, borde, :]
-    spectro_42_one = spectro_42[row, borde, :]
+    spectro_24_one = spectro_24[borde_y, borde_x, :]
+    spectro_42_one = spectro_42[borde_y, borde_x, :]
     
-    spectro_chain_up = spectro_spinup[row, borde, :]#spectrum in the first atom
-    spectro_chain_down = spectro_spindown[row, borde, :]#spectrum in the first atom
+    spectro_chain_up = spectro_spinup[borde_y, borde_x, :]#spectrum in the first atom
+    spectro_chain_down = spectro_spindown[borde_y, borde_x, :]#spectrum in the first atom
     
     ndexes = dp.detect_peaks(spectro_chain)#find the peaks
     peaks = vv[ndexes]
@@ -38,7 +38,7 @@ def espectro(spectro, spectro_spinup, spectro_spindown, spectro_13, spectro_31, 
     plt.plot(peaks,spectro_chain[ndexes],'y*')
     plt.xlabel('meV')
     plt.ylabel('PDOS')
-    #plt.title('We use peak # %i ' %i)
+    plt.title('We use peak # %i ' %i)
     plt.savefig('results/spectro.pdf')
     
 

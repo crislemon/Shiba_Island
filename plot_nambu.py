@@ -10,13 +10,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.rcParams.update({'font.size': 13})
 
-def Nambu(spectro_up, spectro_down, spectro_uphole, spectro_downhole, vv, row, borde):
+def Nambu(spectro_up, spectro_down, spectro_uphole, spectro_downhole, vv, row, borde_x, borde_y):
     
     plt.figure(6)
-    spectro_up_1 = spectro_up[row, borde, :]
-    spectro_down_1 = spectro_down[row, borde, :]
-    spectro_uphole_1 = spectro_uphole[row, borde, :]
-    spectro_downhole_1 = spectro_downhole[row, borde, :]
+    spectro_up_1 = spectro_up[borde_y, borde_x, :]
+    spectro_down_1 = spectro_down[borde_y, borde_x, :]
+    spectro_uphole_1 = spectro_uphole[borde_y, borde_x, :]
+    spectro_downhole_1 = spectro_downhole[borde_y, borde_x, :]
 
     plt.plot(vv, spectro_up_1,label='Nambu 1',linewidth=0.8)
     plt.plot(vv, spectro_down_1,label='Nambu 2',linewidth=0.8)
